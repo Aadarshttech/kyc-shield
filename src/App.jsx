@@ -101,7 +101,7 @@ export default function App() {
         style={{
           position: 'fixed',
           bottom: 24,
-          left: 24,
+          right: 24,
           zIndex: 50,
           background: 'var(--bg-glass)',
           border: '1px solid var(--border-glass)',
@@ -125,7 +125,7 @@ export default function App() {
         style={{
           position: 'fixed',
           bottom: 24,
-          left: 80, // Positioned next to the theme toggle
+          right: 80, // Positioned next to the theme toggle
           zIndex: 50,
           background: 'var(--bg-glass)',
           border: '1px solid var(--border-glass)',
