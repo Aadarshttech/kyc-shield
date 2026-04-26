@@ -100,7 +100,7 @@ export default function App() {
         onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')}
         style={{
           position: 'fixed',
-          top: 24,
+          bottom: 24,
           left: 24,
           zIndex: 50,
           background: 'var(--bg-glass)',
@@ -124,7 +124,7 @@ export default function App() {
         onClick={toggleFullscreen}
         style={{
           position: 'fixed',
-          top: 24,
+          bottom: 24,
           left: 80, // Positioned next to the theme toggle
           zIndex: 50,
           background: 'var(--bg-glass)',
