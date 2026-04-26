@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Maximize, Minimize } from 'lucide-react';
 import ViewToggle from './components/ViewToggle';
 import PhoneFrame from './components/user/PhoneFrame';
 import SplashScreen from './components/user/SplashScreen';
@@ -46,6 +46,27 @@ function UserFlow() {
 export default function App() {
   const [currentView, setCurrentView] = useState('user');
   const [theme, setTheme] = useState('light');
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -96,6 +117,31 @@ export default function App() {
         }}
       >
         {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
+      </button>
+
+      {/* Fullscreen Toggle Button */}
+      <button
+        onClick={toggleFullscreen}
+        style={{
+          position: 'fixed',
+          top: 24,
+          left: 80, // Positioned next to the theme toggle
+          zIndex: 50,
+          background: 'var(--bg-glass)',
+          border: '1px solid var(--border-glass)',
+          borderRadius: 'var(--radius-full)',
+          padding: '10px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          color: 'var(--text-primary)',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+          backdropFilter: 'blur(10px)',
+        }}
+        title="Toggle Fullscreen"
+      >
+        {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
       </button>
 
       <ViewToggle currentView={currentView} onToggle={setCurrentView} />
