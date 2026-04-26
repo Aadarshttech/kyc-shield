@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Shield, Monitor, Smartphone } from 'lucide-react';
+import { Shield, Monitor, Smartphone, Sun, Moon, Maximize, Minimize } from 'lucide-react';
 
-export default function ViewToggle({ currentView, onToggle }) {
+export default function ViewToggle({ currentView, onToggle, theme, onThemeToggle, isFullscreen, onFullscreenToggle }) {
   return (
     <motion.div
       initial={{ y: -20, opacity: 0 }}
@@ -69,6 +69,50 @@ export default function ViewToggle({ currentView, onToggle }) {
         <Monitor size={16} />
         Admin Dashboard
       </button>
+
+      {/* Divider */}
+      <div style={{ width: 1, height: 24, background: 'var(--border)', margin: '0 4px' }} />
+
+      {/* Theme Toggle Button */}
+      <button
+        onClick={onThemeToggle}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '10px',
+          borderRadius: 'var(--radius-full)',
+          border: 'none',
+          cursor: 'pointer',
+          background: 'transparent',
+          color: 'var(--text-muted)',
+          transition: 'all 250ms ease',
+        }}
+        title="Toggle Theme"
+      >
+        {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+      </button>
+
+      {/* Fullscreen Toggle Button */}
+      <button
+        onClick={onFullscreenToggle}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '10px',
+          borderRadius: 'var(--radius-full)',
+          border: 'none',
+          cursor: 'pointer',
+          background: 'transparent',
+          color: 'var(--text-muted)',
+          transition: 'all 250ms ease',
+        }}
+        title="Toggle Fullscreen"
+      >
+        {isFullscreen ? <Minimize size={18} /> : <Maximize size={18} />}
+      </button>
+
     </motion.div>
   );
 }

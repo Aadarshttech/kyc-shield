@@ -95,56 +95,18 @@ export default function App() {
         zIndex: 0,
       }} />
 
-      {/* Theme Toggle Button */}
-      <button
-        onClick={() => setTheme(t => t === 'light' ? 'dark' : 'light')}
-        style={{
-          position: 'fixed',
-          bottom: 24,
-          right: 24,
-          zIndex: 50,
-          background: 'var(--bg-glass)',
-          border: '1px solid var(--border-glass)',
-          borderRadius: 'var(--radius-full)',
-          padding: '10px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
-          color: 'var(--text-primary)',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-          backdropFilter: 'blur(10px)',
-        }}
-      >
-        {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
-      </button>
+      <ViewToggle 
+        currentView={currentView} 
+        onToggle={setCurrentView} 
+        theme={theme}
+        onThemeToggle={() => setTheme(t => t === 'light' ? 'dark' : 'light')}
+        isFullscreen={isFullscreen}
+        onFullscreenToggle={toggleFullscreen}
+      />
 
-      {/* Fullscreen Toggle Button */}
-      <button
-        onClick={toggleFullscreen}
-        style={{
-          position: 'fixed',
-          bottom: 24,
-          right: 80, // Positioned next to the theme toggle
-          zIndex: 50,
-          background: 'var(--bg-glass)',
-          border: '1px solid var(--border-glass)',
-          borderRadius: 'var(--radius-full)',
-          padding: '10px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
-          color: 'var(--text-primary)',
-          boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-          backdropFilter: 'blur(10px)',
-        }}
-        title="Toggle Fullscreen"
-      >
-        {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
-      </button>
 
-      <ViewToggle currentView={currentView} onToggle={setCurrentView} />
+
+
 
       <AnimatePresence mode="wait">
         {currentView === 'user' ? (
