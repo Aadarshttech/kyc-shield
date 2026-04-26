@@ -48,8 +48,8 @@
 
   /* Sizing */
   --sidebar-width: 260px;
-  --phone-width: 360px;
-  --phone-height: 740px;
+  --phone-width: 390px;
+  --phone-height: 844px;
 
   /* Transitions */
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -355,7 +355,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 20px;
+  padding: 40px 20px;
   position: relative;
 }
 
