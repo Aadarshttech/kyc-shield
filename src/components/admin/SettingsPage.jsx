@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Settings, Shield, Zap, AlertTriangle, Save, RotateCcw, FileSearch, Scan, Brain, Fingerprint } from 'lucide-react';
+import { Settings, Shield, Zap, AlertTriangle, Save, RotateCcw, FileSearch, Scan, Brain, Fingerprint, Check } from 'lucide-react';
 
 export default function SettingsPage() {
   const [thresholds, setThresholds] = useState({
@@ -67,9 +67,9 @@ export default function SettingsPage() {
             onClick={handleSave}
             whileTap={{ scale: 0.96 }}
             className="btn btn-green"
-            style={{ padding: '8px 16px', fontSize: '0.8rem', minWidth: 140 }}
+            style={{ padding: '8px 16px', fontSize: '0.8rem', minWidth: 140, display: 'flex', alignItems: 'center', gap: 8 }}
           >
-            {saved ? null : <Save size={14} />}
+            {saved ? <Check size={14} /> : <Save size={14} />}
             {saved ? 'Saved ✓' : 'Save Changes'}
           </motion.button>
         </div>
@@ -237,19 +237,24 @@ export default function SettingsPage() {
                   <div
                     onClick={() => toggleHardFail(i)}
                     style={{
-                      width: 36, height: 20, borderRadius: 'var(--radius-full)',
+                      width: 40, height: 22, borderRadius: 'var(--radius-full)',
                       background: hardFails[i] ? 'var(--green)' : 'var(--bg-elevated)',
+                      border: '1px solid var(--border-glass-strong)',
                       position: 'relative', cursor: 'pointer',
-                      transition: 'background 0.2s ease',
+                      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                      boxShadow: hardFails[i] ? '0 0 10px var(--green-dim)' : 'none',
                     }}
                   >
-                    <div style={{
-                      width: 16, height: 16, borderRadius: '50%',
-                      background: '#fff',
-                      position: 'absolute', top: 2,
-                      left: hardFails[i] ? 18 : 2,
-                      transition: 'left 0.2s',
-                    }} />
+                    <motion.div 
+                      animate={{ x: hardFails[i] ? 20 : 2 }}
+                      transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+                      style={{
+                        width: 16, height: 16, borderRadius: '50%',
+                        background: '#fff',
+                        position: 'absolute', top: 2,
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                      }} 
+                    />
                   </div>
                 </div>
                 <p style={{ fontSize: '0.7rem', color: 'var(--text-dim)', lineHeight: 1.4 }}>{cond.desc}</p>
