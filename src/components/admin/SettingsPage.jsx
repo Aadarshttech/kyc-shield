@@ -36,6 +36,10 @@ export default function SettingsPage() {
     setSaved(false);
   };
 
+  const getPercent = (value, min, max) => {
+    return ((value - min) / (max - min)) * 100 + '%';
+  };
+
   const sliderStyle = {
     width: '100%', height: 6, borderRadius: 'var(--radius-full)',
     appearance: 'none', background: 'var(--bg-elevated)',
@@ -55,7 +59,7 @@ export default function SettingsPage() {
           </p>
         </div>
         <div style={{ display: 'flex', gap: 10 }}>
-          <button onClick={handleReset} className="btn btn-ghost" style={{ padding: '8px 16px', fontSize: '0.8rem' }}>
+          <button onClick={handleReset} className="btn btn-ghost" style={{ padding: '8px 16px', fontSize: '0.8rem', minWidth: 120 }}>
             <RotateCcw size={14} />
             Reset Defaults
           </button>
@@ -63,9 +67,9 @@ export default function SettingsPage() {
             onClick={handleSave}
             whileTap={{ scale: 0.96 }}
             className="btn btn-green"
-            style={{ padding: '8px 16px', fontSize: '0.8rem' }}
+            style={{ padding: '8px 16px', fontSize: '0.8rem', minWidth: 140 }}
           >
-            <Save size={14} />
+            {saved ? null : <Save size={14} />}
             {saved ? 'Saved ✓' : 'Save Changes'}
           </motion.button>
         </div>
@@ -87,7 +91,12 @@ export default function SettingsPage() {
                 <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Auto-Approve Below</span>
                 <span className="mono" style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--green)' }}>{thresholds.autoApprove}</span>
               </div>
-              <input type="range" min="5" max="50" value={thresholds.autoApprove} onChange={(e) => handleSlider('autoApprove', e.target.value)} style={sliderStyle} />
+              <input 
+                type="range" min="5" max="50" 
+                value={thresholds.autoApprove} 
+                onChange={(e) => handleSlider('autoApprove', e.target.value)} 
+                style={{ ...sliderStyle, '--val': getPercent(thresholds.autoApprove, 5, 50) }} 
+              />
               <p style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: 6 }}>
                 Applications scoring below this are automatically approved and wallet provisioned.
               </p>
@@ -99,7 +108,12 @@ export default function SettingsPage() {
                 <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Manual Review Above</span>
                 <span className="mono" style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--yellow)' }}>{thresholds.manualReview}</span>
               </div>
-              <input type="range" min="30" max="80" value={thresholds.manualReview} onChange={(e) => handleSlider('manualReview', e.target.value)} style={sliderStyle} />
+              <input 
+                type="range" min="30" max="80" 
+                value={thresholds.manualReview} 
+                onChange={(e) => handleSlider('manualReview', e.target.value)} 
+                style={{ ...sliderStyle, '--val': getPercent(thresholds.manualReview, 30, 80) }} 
+              />
               <p style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: 6 }}>
                 Applications in this range are queued for human compliance officer review.
               </p>
@@ -111,7 +125,12 @@ export default function SettingsPage() {
                 <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Auto-Reject Above</span>
                 <span className="mono" style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--red)' }}>{thresholds.autoReject}</span>
               </div>
-              <input type="range" min="70" max="99" value={thresholds.autoReject} onChange={(e) => handleSlider('autoReject', e.target.value)} style={sliderStyle} />
+              <input 
+                type="range" min="70" max="99" 
+                value={thresholds.autoReject} 
+                onChange={(e) => handleSlider('autoReject', e.target.value)} 
+                style={{ ...sliderStyle, '--val': getPercent(thresholds.autoReject, 70, 99) }} 
+              />
               <p style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: 6 }}>
                 Applications scoring above this with a hard-fail condition are automatically rejected.
               </p>
@@ -156,7 +175,12 @@ export default function SettingsPage() {
                   </span>
                   <span className="mono" style={{ fontSize: '0.9rem', fontWeight: 700, color: v.color }}>{thresholds[v.key]}%</span>
                 </div>
-                <input type="range" min="10" max="60" value={thresholds[v.key]} onChange={(e) => handleSlider(v.key, e.target.value)} style={sliderStyle} />
+                <input 
+                  type="range" min="10" max="60" 
+                  value={thresholds[v.key]} 
+                  onChange={(e) => handleSlider(v.key, e.target.value)} 
+                  style={{ ...sliderStyle, '--val': getPercent(thresholds[v.key], 10, 60) }} 
+                />
                 <p style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: 6 }}>{v.desc}</p>
               </div>
             ))}
