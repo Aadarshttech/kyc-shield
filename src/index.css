@@ -602,3 +602,28 @@ h1, h2, h3, h4, h5, h6 {
 .text-center { text-align: center; }
 .relative { position: relative; }
 .overflow-hidden { overflow: hidden; }
+
+ / *    % %  C u s t o m   R a n g e   S l i d e r s    % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %  * / 
+ . c u s t o m - s l i d e r : : - w e b k i t - s l i d e r - t h u m b   { 
+     - w e b k i t - a p p e a r a n c e :   n o n e ; 
+     a p p e a r a n c e :   n o n e ; 
+     w i d t h :   1 4 p x ; 
+     h e i g h t :   1 4 p x ; 
+     b o r d e r - r a d i u s :   5 0 % ; 
+     b a c k g r o u n d :   c u r r e n t C o l o r ; 
+     c u r s o r :   p o i n t e r ; 
+     b o x - s h a d o w :   0   0   1 0 p x   r g b a ( 0 , 0 , 0 , 0 . 5 ) ; 
+     b o r d e r :   2 p x   s o l i d   v a r ( - - b g - c a r d ) ; 
+ } 
+ 
+ . c u s t o m - s l i d e r : : - m o z - r a n g e - t h u m b   { 
+     w i d t h :   1 4 p x ; 
+     h e i g h t :   1 4 p x ; 
+     b o r d e r - r a d i u s :   5 0 % ; 
+     b a c k g r o u n d :   c u r r e n t C o l o r ; 
+     c u r s o r :   p o i n t e r ; 
+     b o x - s h a d o w :   0   0   1 0 p x   r g b a ( 0 , 0 , 0 , 0 . 5 ) ; 
+     b o r d e r :   2 p x   s o l i d   v a r ( - - b g - c a r d ) ; 
+ } 
+  
+ 
