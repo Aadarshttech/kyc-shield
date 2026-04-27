@@ -12,19 +12,12 @@ export default function SettingsPage() {
     v3Weight: 35,
   });
 
-  const [conditions, setConditions] = useState({
-    virtualCamera: true,
-    rppgFailure: true,
-    persistenceParadox: true,
-    duplicateDevice: true,
-    duplicateId: true,
-    faceMatchFailure: true,
-  });
-
   const [saved, setSaved] = useState(false);
 
-  const toggleCondition = (key) => {
-    setConditions(prev => ({ ...prev, [key]: !prev[key] }));
+  const [hardFails, setHardFails] = useState([true, true, true, true, true, true]);
+
+  const toggleHardFail = (index) => {
+    setHardFails(prev => prev.map((v, i) => i === index ? !v : v));
     setSaved(false);
   };
 
@@ -43,15 +36,10 @@ export default function SettingsPage() {
     setSaved(false);
   };
 
-  const getSliderStyle = (val, min, max, color) => {
-    const percentage = ((val - min) / (max - min)) * 100;
-    return {
-      width: '100%', height: 6, borderRadius: 'var(--radius-full)',
-      appearance: 'none', 
-      background: `linear-gradient(to right, ${color} ${percentage}%, var(--border) ${percentage}%)`,
-      outline: 'none', cursor: 'pointer',
-      color: color,
-    };
+  const sliderStyle = {
+    width: '100%', height: 6, borderRadius: 'var(--radius-full)',
+    appearance: 'none', background: 'var(--bg-elevated)',
+    outline: 'none', cursor: 'pointer',
   };
 
   return (
@@ -99,7 +87,7 @@ export default function SettingsPage() {
                 <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Auto-Approve Below</span>
                 <span className="mono" style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--green)' }}>{thresholds.autoApprove}</span>
               </div>
-              <input type="range" min="5" max="50" value={thresholds.autoApprove} onChange={(e) => handleSlider('autoApprove', e.target.value)} style={getSliderStyle(thresholds.autoApprove, 5, 50, 'var(--green)')} className="custom-slider" />
+              <input type="range" min="5" max="50" value={thresholds.autoApprove} onChange={(e) => handleSlider('autoApprove', e.target.value)} style={sliderStyle} />
               <p style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: 6 }}>
                 Applications scoring below this are automatically approved and wallet provisioned.
               </p>
@@ -111,7 +99,7 @@ export default function SettingsPage() {
                 <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Manual Review Above</span>
                 <span className="mono" style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--yellow)' }}>{thresholds.manualReview}</span>
               </div>
-              <input type="range" min="30" max="80" value={thresholds.manualReview} onChange={(e) => handleSlider('manualReview', e.target.value)} style={getSliderStyle(thresholds.manualReview, 30, 80, 'var(--yellow)')} className="custom-slider" />
+              <input type="range" min="30" max="80" value={thresholds.manualReview} onChange={(e) => handleSlider('manualReview', e.target.value)} style={sliderStyle} />
               <p style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: 6 }}>
                 Applications in this range are queued for human compliance officer review.
               </p>
@@ -123,7 +111,7 @@ export default function SettingsPage() {
                 <span style={{ fontSize: '0.82rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Auto-Reject Above</span>
                 <span className="mono" style={{ fontSize: '0.9rem', fontWeight: 700, color: 'var(--red)' }}>{thresholds.autoReject}</span>
               </div>
-              <input type="range" min="70" max="99" value={thresholds.autoReject} onChange={(e) => handleSlider('autoReject', e.target.value)} style={getSliderStyle(thresholds.autoReject, 70, 99, 'var(--red)')} className="custom-slider" />
+              <input type="range" min="70" max="99" value={thresholds.autoReject} onChange={(e) => handleSlider('autoReject', e.target.value)} style={sliderStyle} />
               <p style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: 6 }}>
                 Applications scoring above this with a hard-fail condition are automatically rejected.
               </p>
@@ -168,7 +156,7 @@ export default function SettingsPage() {
                   </span>
                   <span className="mono" style={{ fontSize: '0.9rem', fontWeight: 700, color: v.color }}>{thresholds[v.key]}%</span>
                 </div>
-                <input type="range" min="10" max="60" value={thresholds[v.key]} onChange={(e) => handleSlider(v.key, e.target.value)} style={getSliderStyle(thresholds[v.key], 10, 60, v.color)} className="custom-slider" />
+                <input type="range" min="10" max="60" value={thresholds[v.key]} onChange={(e) => handleSlider(v.key, e.target.value)} style={sliderStyle} />
                 <p style={{ fontSize: '0.7rem', color: 'var(--text-dim)', marginTop: 6 }}>{v.desc}</p>
               </div>
             ))}
@@ -206,14 +194,14 @@ export default function SettingsPage() {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
             {[
-              { id: 'virtualCamera', label: 'Virtual Camera Detected', desc: 'OBS, ManyCam, or other virtual camera software detected in device camera list', icon: Scan },
-              { id: 'rppgFailure', label: 'rPPG Liveness Failure', desc: 'Heart rate signal returned 0 BPM across the entire 15-second video sample', icon: AlertTriangle },
-              { id: 'persistenceParadox', label: 'Persistence Paradox', desc: 'Face mesh landmarks persist above 90% during confirmed physical hand occlusion', icon: Brain },
-              { id: 'duplicateDevice', label: 'Duplicate Device ID', desc: 'Same device fingerprint attempting 3+ KYC registrations within 24 hours', icon: Fingerprint },
-              { id: 'duplicateId', label: 'Duplicate ID Number', desc: 'Citizenship/Passport number already registered to an existing verified account', icon: FileSearch },
-              { id: 'faceMatchFailure', label: 'Face Match Failure', desc: 'AdaFace 1:1 embedding comparison returns similarity below 40% threshold', icon: Scan },
-            ].map((cond) => (
-              <div key={cond.id} style={{
+              { label: 'Virtual Camera Detected', desc: 'OBS, ManyCam, or other virtual camera software detected in device camera list', icon: Scan },
+              { label: 'rPPG Liveness Failure', desc: 'Heart rate signal returned 0 BPM across the entire 15-second video sample', icon: AlertTriangle },
+              { label: 'Persistence Paradox', desc: 'Face mesh landmarks persist above 90% during confirmed physical hand occlusion', icon: Brain },
+              { label: 'Duplicate Device ID', desc: 'Same device fingerprint attempting 3+ KYC registrations within 24 hours', icon: Fingerprint },
+              { label: 'Duplicate ID Number', desc: 'Citizenship/Passport number already registered to an existing verified account', icon: FileSearch },
+              { label: 'Face Match Failure', desc: 'AdaFace 1:1 embedding comparison returns similarity below 40% threshold', icon: Scan },
+            ].map((cond, i) => (
+              <div key={i} style={{
                 padding: 16, borderRadius: 'var(--radius-md)',
                 background: 'var(--bg-glass)', border: '1px solid var(--border-glass)',
               }}>
@@ -222,20 +210,20 @@ export default function SettingsPage() {
                     <cond.icon size={14} color="var(--red)" />
                     <span style={{ fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-primary)' }}>{cond.label}</span>
                   </div>
-                  <div 
-                    onClick={() => toggleCondition(cond.id)}
+                  <div
+                    onClick={() => toggleHardFail(i)}
                     style={{
                       width: 36, height: 20, borderRadius: 'var(--radius-full)',
-                      background: conditions[cond.id] ? 'var(--green)' : 'var(--bg-elevated)',
+                      background: hardFails[i] ? 'var(--green)' : 'var(--bg-elevated)',
                       position: 'relative', cursor: 'pointer',
-                      transition: 'background 0.2s',
+                      transition: 'background 0.2s ease',
                     }}
                   >
                     <div style={{
                       width: 16, height: 16, borderRadius: '50%',
                       background: '#fff',
                       position: 'absolute', top: 2,
-                      left: conditions[cond.id] ? 18 : 2,
+                      left: hardFails[i] ? 18 : 2,
                       transition: 'left 0.2s',
                     }} />
                   </div>

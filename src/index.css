@@ -244,6 +244,62 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--red);
 }
 
+/* ── Range Slider ─────────────────────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--cyan) 0%, var(--green) 100%);
+  opacity: 0.35;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--cyan);
+  border: 2px solid var(--bg-primary);
+  box-shadow: 0 0 8px var(--cyan-dim), 0 2px 6px rgba(0,0,0,0.3);
+  margin-top: -6px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 14px var(--cyan-glow), 0 2px 8px rgba(0,0,0,0.4);
+}
+
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--cyan) 0%, var(--green) 100%);
+  opacity: 0.35;
+  border: none;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--cyan);
+  border: 2px solid var(--bg-primary);
+  box-shadow: 0 0 8px var(--cyan-dim), 0 2px 6px rgba(0,0,0,0.3);
+  cursor: pointer;
+}
+
 /* ── Badge ─────────────────────────────────────────────── */
 .badge {
   display: inline-flex;
