@@ -238,7 +238,7 @@ export default function SettingsPage() {
                     onClick={() => toggleHardFail(i)}
                     style={{
                       width: 40, height: 22, borderRadius: 'var(--radius-full)',
-                      background: hardFails[i] ? 'var(--green)' : 'var(--bg-elevated)',
+                      background: hardFails[i] ? 'var(--green)' : 'rgba(255, 255, 255, 0.1)',
                       border: '1px solid var(--border-glass-strong)',
                       position: 'relative', cursor: 'pointer',
                       transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
